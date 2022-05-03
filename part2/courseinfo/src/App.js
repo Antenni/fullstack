@@ -5,27 +5,26 @@ const Header = ({name}) => {
     <h1>{name}</h1>
   )
 }
-const Part = ({name, exercises}) => {
-    return (
-      <p>{name} {exercises}</p>
-    )
-  }
-
-const Content = ({parts}) => {
+const Part = (props) => {
   return (
-<div>
-{parts.map(part =>
-      <Part key={part.id} name={part.name} exercises={part.exercises}/>)}     
-</div>
+    <p>{props.name} {props.exercises}</p>
   )
 }
 
 const Total = ({parts}) => {
   return (
-    <h4>total of {parts.reduce((s,p) => s+p.exercises,0)} exercises</h4>
+    <h4>total of {parts.reduce((s, p) => s + p.exercises, 0)} exercises</h4>
   )
 }
 
+const Content = ({parts}) => {
+  return (
+    <div>
+    {parts.map(part =>
+      <Part key={part.id} name={part.name} exercises={part.exercises}/>)}
+    </div>
+  )
+}
 const Course = ({course}) => {
   return (
     <div>
@@ -37,7 +36,8 @@ const Course = ({course}) => {
 }
 
 const App=() => {
-  const course = {
+  const courses = [
+    {
     id:1,
     name: 'Half Stack application development',
     parts: [
@@ -62,10 +62,29 @@ const App=() => {
         id: 4
       }
     ]
-  }
+  },
+  {
+      name: 'Node.js',
+      id: 2,
+      parts: [
+        {
+          name: 'Routing',
+          exercises: 3,
+          id: 1
+        },
+        {
+          name: 'Middlewares',
+          exercises: 7,
+          id: 2
+        }
+      ]
+    }
+]
   return (
-    <Course course={course} />
+    <div>
+    <h1>Web development curriculum</h1>
+    {courses.map(course => <Course key={courses.id} course={course}/>)}
+    </div>
   );
 }
-
 export default App;
