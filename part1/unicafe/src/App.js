@@ -9,9 +9,23 @@ const Button = (props) => {
   )
 }
 
-const Value = ({text,sum}) => {
+const Value = ({text,value}) => {
   return (
-    <p>{text} {sum}</p>
+    <p>{text} {value}</p>
+  )
+}
+
+const Statistics = (props) => {
+  return (
+    <div>
+      <h1>statistics</h1>
+      <Value text="good" value={props.good}/>
+      <Value text="neutral" value={props.neutral}/>
+      <Value text="bad" value={props.bad}/>
+      <Value text="all" value={props.all}/>
+      <Value text="average" value={props.average}/>
+      <Value text="positive" value={props.positive.toFixed(1) +' %'}/>
+    </div>
   )
 }
 
@@ -31,12 +45,7 @@ const App = () => {
       <Button text="neutral" handleClick={() => setNeutral(neutral + 1)} />&nbsp;
       <Button text="bad" handleClick={() => setBad(bad + 1)} />
       <h1>statistics</h1>
-      <Value text="good" sum={good} />
-      <Value text="neutral" sum={neutral} />
-      <Value text="bad" sum={bad} />
-      <Value text="all" sum={all} />
-      <Value text="average" sum={average} />
-      <Value text="positive" sum={positive +' %'} />
+      <Statistics good={good} neutral={neutral} bad={bad} all={all} average={average} positive={positive}/>
     </div>
   )
 }
