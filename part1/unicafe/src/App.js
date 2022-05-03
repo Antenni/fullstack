@@ -12,9 +12,12 @@ const Button = (props) => {
 const StatisticLine = (props) => {
   return (
     <div>
-      <p>
-        {props.text} {props.value}
-        </p>
+      <table>
+        <tr>
+        <td>{props.text}</td>
+        <td>{props.value}</td>
+      </tr>
+      </table>
     </div>
   )
 }
@@ -54,7 +57,11 @@ const App = () => {
       <Button text="neutral" handleClick={() => setNeutral(neutral + 1)} />&nbsp;
       <Button text="bad" handleClick={() => setBad(bad + 1)} />
       <h1>statistics</h1>
-      <Statistics good={good} neutral={neutral} bad={bad} all={all} average={average} positive={positive}/>
+      <table>
+        <tbody>
+          <Statistics good={good} neutral={neutral} bad={bad} all={all} average={average} positive={positive}/>
+        </tbody>
+      </table>
     </div>
   )
 }
