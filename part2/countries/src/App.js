@@ -26,11 +26,12 @@ const Nations = ({setSearchName,showNations}) => {
       </div>
     )
   }
-  else if(showNations.length<=10)
+  else if(showNations.length <= 10)
   {
     return(
       <div>
-        {showNations.map((countries)=><div key={countries.name.common}>{countries.name.common}
+        {showNations.map((countries) => <div key={countries.name.common}>{countries.name.common}&nbsp;
+        <button type="button" value={countries.name.common} onClick={() => setSearchName(countries.name.common)}>show</button>
         </div>
       )
       }
