@@ -21,9 +21,15 @@ const remove = (objectid) => {
   return request.then(response => response)
 }
 
+const replace = (newobject) => {
+  const request = axios.put(baseUrl+`/`+newobject.id,newobject)
+  return request.then(response => response.data)
+}
+
 export default {
   getAll: getAll, 
   create: create, 
   update: update,
-  remove: remove
+  remove: remove,
+  replace: replace
 }
