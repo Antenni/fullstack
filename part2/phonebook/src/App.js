@@ -3,6 +3,7 @@ import Filter from './Filter'
 import PersonForm from './PersonForm'
 import Persons from './Persons'
 import personService from './services/persons'
+import Notification from './Notification'
 
 const App = () => {
     
@@ -10,6 +11,7 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [newSearch, setNewSearch] = useState('')
+  const [confirmMessage,setConfirmMessage] = useState(null)
     
   useEffect(() => {
     personService
@@ -70,7 +72,13 @@ const App = () => {
           setPersons(persons.map(person => person.id===responsedata.id?responsedata:person))
         })
       }
- }
+    }
+
+    setConfirmMessage(`Added ${newName}.`)
+    setTimeout(() => {
+      setConfirmMessage(null)
+    },5000)
+
     setNewName('')
     setNewNumber('')
     }
@@ -78,6 +86,7 @@ const App = () => {
     return (
       <div>
         <h2>Phonebook</h2>
+        <Notification message={confirmMessage} />
         <Filter title="filter shown with"
         name={newSearch} handleFunction={addNewSearch} />
         <h2>Add a New</h2>
