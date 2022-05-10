@@ -61,6 +61,10 @@ const App = () => {
     .then(returnedPerson => {
         setPersons(persons.concat(returnedPerson))
     })
+    setConfirmMessage(`Added ${newName}.`)
+    setTimeout(() => {
+      setConfirmMessage(null)
+    },5000)
 
   }
     else {
@@ -70,14 +74,24 @@ const App = () => {
         personService.replace(changedPerson)
         .then(responsedata => {
           setPersons(persons.map(person => person.id===responsedata.id?responsedata:person))
+
+          setConfirmMessage(`Updated ${newName}.`)
+          setTimeout(() => {
+            setConfirmMessage(null)
+          },5000)
+
+       })
+        .catch(error => {
+          console.log(newName)
+          setPersons(persons.filter(person => person.name !== newName))
+          setConfirmMessage(`Information of ${newName} has already been removed from server`)
+          setTimeout(() => {
+            setConfirmMessage(null)
+          },5000)
+
         })
       }
     }
-
-    setConfirmMessage(`Added ${newName}.`)
-    setTimeout(() => {
-      setConfirmMessage(null)
-    },5000)
 
     setNewName('')
     setNewNumber('')
