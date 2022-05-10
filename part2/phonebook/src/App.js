@@ -21,6 +21,20 @@ const App = () => {
 
     const result = persons.filter(person => person.name.includes(newSearch))
 
+    const deletePerson = (event) => {
+      event.preventDefault()
+      const id = parseInt(event.target.value)
+      const personname = persons.find(person => person.id === id)
+      if(window.confirm(`Delete ${personname.name}?`)){
+        personService
+        .remove(id)
+        .then(response => {
+            setPersons(persons.filter(person => person.id !== id))
+        })
+      }
+  
+    }
+
     const addNewSearch = (event) => {
       setNewSearch(event.target.value)
     }
@@ -64,7 +78,7 @@ const App = () => {
         addNewName={addNewName} newNumber={newNumber}
         addNewNumber={addNewNumber} />
         <h2>Numbers</h2>
-        <Persons result={result} />
+        <Persons result={result} delPerson={deletePerson} />
         </div>
   )
 }
