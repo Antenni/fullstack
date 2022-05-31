@@ -93,4 +93,14 @@ const blogs = [
                     }
                     expect(result).toEqual(expectedBlog)
                     }) 
+                })
+                describe('author', () => {
+                        test('most blogs is identified correct', () => {
+                        const result = listHelper.mostBlogs(blogs)
+                        const expectedAuthor = {
+                            author: 'Robert C. Martin',
+                            blogs: 3
+                        }
+                        expect(result).toEqual(expectedAuthor)
+                    })
                     }) 
