@@ -47,7 +47,7 @@ test('unique identifier defined', async () => {
   expect(response.body[0].id).toBeDefined()
 })
 
-test('add a valid blog', async () => {
+test('add a blog', async () => {
   const newBlog = {
     title: 'Blogiest Blog',
     author: "Jenny From The Blog",
@@ -66,6 +66,18 @@ test('add a valid blog', async () => {
   expect(blogs).toHaveLength(initialBlogs.length + 1)
   expect(authors).toContain(newBlog.author)
 
+})
+
+test('blog with no likes', async () => {
+  const newBlog = {
+    title: 'Blog with no likes',
+    author: 'No Like',
+    url: 'http://like.no'
+  }
+
+  const noLikes = await api.post('/api/blogs').send(newBlog)
+
+  expect(noLikes.body).toHaveProperty('likes', 0)
 })
 
 afterAll(() => {
