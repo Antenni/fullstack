@@ -99,7 +99,20 @@ test('delete blog', async () => {
   await api
     .delete(`/api/blogs/${deleteBlog.id}`)
     .expect(204)
-})
+
+    const deletedBlog = await Blog.find({})
+    expect(deletedBlog).toHaveLength(initialBlogs.length - 1)
+  })
+
+  test('update and add likes', async () => {
+    const blogs = await api.get("/api/blogs")
+    const id = blogs.body[1].id
+    const updateLikes = { likes: 333 }
+
+    const updatedBlog = await api.put(`/api/blogs/${id}`).send(updateLikes)
+
+    expect(updatedBlog.body).toHaveProperty('likes', updateLikes.likes)
+  })
 
 afterAll(() => {
     mongoose.connection.close()
