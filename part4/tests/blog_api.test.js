@@ -80,6 +80,18 @@ test('blog with no likes', async () => {
   expect(noLikes.body).toHaveProperty('likes', 0)
 })
 
+test("no title and url", async () => {
+  const noTitleUrl = {
+    author: 'No Titleurl',
+    likes: 5
+  }
+
+  await api
+    .post("/api/blogs")
+    .send(noTitleUrl)
+    .expect(400)
+})
+
 afterAll(() => {
     mongoose.connection.close()
 })
