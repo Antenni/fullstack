@@ -21,11 +21,12 @@ const initialBlogs = [
 
 beforeEach(async () => {
   await Blog.deleteMany({})
-    let blogObj = new Blog(initialBlogs[0])
-    await blogObj.save()
-    blogObj = new Blog(initialBlogs[1])
-    await blogObj.save()
-  }, 9999)
+  
+  for (let blog of initialBlogs) {
+    let blogObject = new Blog(blog)
+    await blogObject.save()
+}
+  })
 
 describe('blog api', () => {
 
@@ -44,6 +45,26 @@ test('amount of blogs', async () => {
 test('unique identifier defined', async () => {
   const response = await api.get('/api/blogs')
   expect(response.body[0].id).toBeDefined()
+})
+
+test('add a valid blog', async () => {
+  const newBlog = {
+    title: 'Blogiest Blog',
+    author: "Jenny From The Blog",
+    url: "http://jftb.com",
+    likes: 21,
+  }
+
+  await api
+  .post('/api/blogs')
+  .send(newBlog)
+  .expect(201)
+  .expect('Content-Type', /application\/json/)
+
+  const blogs = await Blog.find({})
+  const authors = blogs.map(aut => aut.author)
+  expect(blogs).toHaveLength(initialBlogs.length + 1)
+  expect(authors).toContain(newBlog.author)
 
 })
 
