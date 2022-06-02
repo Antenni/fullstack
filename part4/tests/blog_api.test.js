@@ -92,6 +92,15 @@ test("no title and url", async () => {
     .expect(400)
 })
 
+test('delete blog', async () => {
+  const blogs = await Blog.find({})
+  const deleteBlog = blogs[0]
+
+  await api
+    .delete(`/api/blogs/${deleteBlog.id}`)
+    .expect(204)
+})
+
 afterAll(() => {
     mongoose.connection.close()
 })
